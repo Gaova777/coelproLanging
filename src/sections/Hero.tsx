@@ -5,8 +5,8 @@ const Hero = () => {
   
   // Lista de videos disponibles en la carpeta public/video
   const videos = [
-    '../public/video/Video_de_acabados_de_construcción.mp4',
-    '../public/video/Video_Generado_Techo_y_Acabados.mp4'
+    '/video/Video_de_acabados_de_construcción.mp4',
+    '/video/Video_Generado_Techo_y_Acabados.mp4'
     // Agrega más videos según los archivos que tengas
   ];
 
