@@ -1,6 +1,15 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 
 const Hero = () => {
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  
+  // Lista de videos disponibles en la carpeta public/video
+  const videos = [
+    '../public/video/Video_de_acabados_de_construcción.mp4',
+    '../public/video/Video_Generado_Techo_y_Acabados.mp4'
+    // Agrega más videos según los archivos que tengas
+  ];
+
   const scrollToContact = () => {
     const contactSection = document.getElementById('contact');
     if (contactSection) {
@@ -8,11 +17,38 @@ const Hero = () => {
     }
   };
 
+  // Cambiar video cada 10 segundos
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentVideoIndex((prevIndex) => 
+        (prevIndex + 1) % videos.length
+      );
+    }, 10000);
+
+    return () => clearInterval(interval);
+  }, [videos.length]);
+
   return (
-    <section id="hero" className="relative h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat" style={{
-      backgroundImage: `linear-gradient(rgba(10, 46, 92, 0.7), rgba(10, 46, 92, 0.7)), url('/hero-background.jpg')`
-    }}>
-      <div className="text-center text-white max-w-4xl px-6">
+    <section id="hero" className="relative h-screen flex items-center justify-center overflow-hidden">
+      {/* Video de fondo */}
+      <video
+        key={currentVideoIndex}
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover z-0"
+      >
+        <source src={videos[currentVideoIndex]} type="video/mp4" />
+        {/* Fallback para navegadores que no soporten video */}
+        Tu navegador no soporta videos HTML5.
+      </video>
+
+      {/* Capa opaca oscura encima del video */}
+      <div className="absolute inset-0 bg-black bg-opacity-60 z-10"></div>
+
+      {/* Contenido del hero */}
+      <div className="relative z-20 text-center text-white max-w-4xl px-6">
         <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
           Soluciones Integrales en Construcción y Mantenimiento
         </h1>
