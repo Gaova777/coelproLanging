@@ -1,52 +1,59 @@
-import React from 'react';
-import { CheckCircle } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Container } from '../components/ui/Container';
+import { SectionHeading } from '../components/ui/SectionHeading';
+import { processSteps } from '../data/process';
 
-const Process = () => {
-  return (
-    <section id="process" className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-6">
-        <h2 className="text-4xl font-bold text-[#0a2e5c] text-center mb-16">
-          Éxito Garantizado en 4 Fases
-        </h2>
-        <div className="grid md:grid-cols-4 gap-8">
-          {[
-            {
-              phase: '01',
-              title: 'Diagnóstico y Levantamiento',
-              description: 'Visita técnica para identificar necesidades y presentar un informe diagnóstico.'
-            },
-            {
-              phase: '02',
-              title: 'Diseño y Planeación',
-              description: 'Creación de presupuesto detallado, cronograma de ejecución y firma de contrato.'
-            },
-            {
-              phase: '03',
-              title: 'Ejecución de la Obra',
-              description: 'Supervisión técnica permanente y reportes periódicos de avances, cumpliendo la normatividad.'
-            },
-            {
-              phase: '04',
-              title: 'Entrega y Garantía',
-              description: 'Entrega final del proyecto cumpliendo y superando las expectativas, con garantía de satisfacción.'
-            }
-          ].map((step, index) => (
-            <div key={index} className="text-center">
-              <div className="bg-[#f37021] text-white text-2xl font-bold w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
-                {step.phase}
+const Process = () => (
+  <section id="process" className="relative py-24 md:py-32 bg-white overflow-hidden">
+    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-radial-fade opacity-40 blur-3xl pointer-events-none" aria-hidden />
+    <Container className="relative">
+      <SectionHeading
+        eyebrow="Cómo trabajamos"
+        title={
+          <>
+            Éxito garantizado <br />
+            en <span className="italic text-brand-orange">4 fases claras</span>.
+          </>
+        }
+        description="Un proceso pensado para que sepas exactamente qué esperar en cada etapa — sin sobresaltos, sin ambigüedades."
+      />
+
+      <div className="relative mt-20">
+        <div className="hidden lg:block absolute top-8 left-8 right-8 h-px bg-gradient-to-r from-transparent via-brand-navy/15 to-transparent" aria-hidden />
+
+        <ol className="grid gap-10 md:gap-6 md:grid-cols-2 lg:grid-cols-4">
+          {processSteps.map((step, i) => (
+            <motion.li
+              key={step.phase}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.7, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
+              className="relative group"
+            >
+              <div className="relative flex items-center justify-center mb-6">
+                <span className="relative z-10 flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-brand text-white font-display text-xl font-semibold shadow-glow-orange group-hover:scale-105 transition-transform duration-500 ease-premium">
+                  {step.phase}
+                </span>
+                {i < processSteps.length - 1 && (
+                  <span
+                    className="hidden lg:block absolute left-1/2 top-1/2 translate-x-8 -translate-y-1/2 w-[calc(100%-2rem)] h-px bg-gradient-to-r from-brand-orange/40 to-transparent"
+                    aria-hidden
+                  />
+                )}
               </div>
-              <h3 className="text-xl font-semibold text-[#0a2e5c] mb-4">
-                {step.title}
-              </h3>
-              <p className="text-[#333333] leading-relaxed">
-                {step.description}
-              </p>
-            </div>
+              <div className="text-center">
+                <h3 className="font-display text-xl font-semibold text-brand-navy mb-3">
+                  {step.title}
+                </h3>
+                <p className="text-brand-stone text-[15px] leading-relaxed">{step.description}</p>
+              </div>
+            </motion.li>
           ))}
-        </div>
+        </ol>
       </div>
-    </section>
-  );
-};
+    </Container>
+  </section>
+);
 
 export default Process;
